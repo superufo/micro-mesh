@@ -8,32 +8,32 @@ import (
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/os/glog"
+	"github.com/micro-mesh/gateway/server/base"
+	"github.com/micro-mesh/gateway/server/inf"
 	"time"
-	"zhugedaojia.com/gateway/server/base"
-	"zhugedaojia.com/gateway/server/inf"
 )
 
-type  WsSrv struct {
+type WsSrv struct {
 	// 数据
 	Ctx context.Context
-	Srv   *ghttp.Server
+	Srv *ghttp.Server
 
-	Host    string
-	Port    int
-	properties  WsProperties
+	Host       string
+	Port       int
+	properties WsProperties
 
 	base.BaseServer
 }
 
-func (h WsSrv)Receive() []byte{
+func (h WsSrv) Receive() []byte {
 	return nil
 }
 
-func (h WsSrv)Send([]byte) error {
+func (h WsSrv) Send([]byte) error {
 	return nil
 }
 
-func (h WsSrv)Run(ops inf.Properties) {
+func (h WsSrv) Run(ops inf.Properties) {
 	h.Ctx = context.Background()
 	s := g.Server()
 
@@ -55,7 +55,7 @@ func (h WsSrv)Run(ops inf.Properties) {
 	})
 	s.SetServerRoot(gfile.MainPkgPath())
 
-	g.Log().Info(h.Ctx,fmt.Sprint("ws ~~~ %s:%d",h.Host,h.Port))
+	g.Log().Info(h.Ctx, fmt.Sprint("ws ~~~ %s:%d", h.Host, h.Port))
 	s.SetPort(h.Port)
 	s.Run()
 }
@@ -64,15 +64,15 @@ func (h WsSrv) GetProperties() inf.Properties {
 	return h.properties
 }
 
-func (h WsSrv) SetProperties(properties inf.Properties){
+func (h WsSrv) SetProperties(properties inf.Properties) {
 	h.properties = properties.(WsProperties)
 }
 
-func NewWsSrv(host string,port int) inf.IServer {
+func NewWsSrv(host string, port int) inf.IServer {
 	wsSrv := WsSrv{
-		Ctx:  gctx.New(),
-		Host: host,
-		Port: port,
+		Ctx:        gctx.New(),
+		Host:       host,
+		Port:       port,
 		properties: WsProperties{},
 	}
 
@@ -80,14 +80,14 @@ func NewWsSrv(host string,port int) inf.IServer {
 	return wsSrv
 }
 
-func  WithWSTimeout(timeout  time.Duration) inf.PropertyFunc {
+func WithWSTimeout(timeout time.Duration) inf.PropertyFunc {
 	return func(p *inf.Properties) {
 		hp := (*p).(WsProperties)
 		hp.timeout = timeout
 	}
 }
 
-func WithWsCash(caching  bool) inf.PropertyFunc {
+func WithWsCash(caching bool) inf.PropertyFunc {
 	return func(p *inf.Properties) {
 		hp := (*p).(WsProperties)
 		hp.caching = caching
@@ -99,8 +99,6 @@ type WsProperties struct {
 	caching bool
 }
 
-func (h  WsProperties)Get(key string) (val interface{}){
+func (h WsProperties) Get(key string) (val interface{}) {
 	return nil
 }
-
-

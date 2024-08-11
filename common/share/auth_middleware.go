@@ -1,26 +1,22 @@
 package share
 
 import (
-	"errors"
 	"github.com/gogf/gf/contrib/rpc/grpcx/v2"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/gogf/gf/v2/net/gclient"
 	"github.com/gogf/gf/v2/os/gctx"
-	protobuf "zhugedaojia.com/common/net/pb/user"
+	protobuf "github.com/micro-mesh/common/net/pb/user"
 
-	"zhugedaojia.com/common/response"
-	"zhugedaojia.com/common/model"
-	"zhugedaojia.com/common/service"
 	"github.com/gogf/gf/v2/errors/gcode"
-
-	gpb "zhugedaojia.com/common/net/pb/gw"
+	"github.com/micro-mesh/common/model"
+	"github.com/micro-mesh/common/response"
+	"github.com/micro-mesh/common/service"
 )
 
 var AuthMiddleware = authMiddleware{}
 
 type authMiddleware struct {
-		TokenServiceUrl  string   //nacos服务发现后的jwt服务地址
+	TokenServiceUrl string //nacos服务发现后的jwt服务地址
 }
 
 // 上下文对象初始化
@@ -41,13 +37,13 @@ func (s *authMiddleware) HttpTokenVerify(r *ghttp.Request) {
 	var (
 		ctx = gctx.New()
 
-		conn          = grpcx.Client.MustNewGrpcClientConn(s.TokenServiceUrl)
-		client        = protobuf.NewUserClient(conn)
+		conn   = grpcx.Client.MustNewGrpcClientConn(s.TokenServiceUrl)
+		client = protobuf.NewUserClient(conn)
 	)
 
 	//获取token
 	token := r.Header.Get("authorization")
-	if token!="" {
+	if token != "" {
 		g.Log().Debug(ctx, "res.Data:", token)
 
 		tokenTos := &protobuf.VerifyTokenTos{Token: token}

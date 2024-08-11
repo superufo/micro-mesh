@@ -8,7 +8,7 @@
 syntax = "proto3";
 
 package user;
-option go_package ="zhugedaojia.com/common/net/pb/user";
+option go_package ="github.com/micro-mesh/common/net/pb/user";
 
 // 服务器登录请求信息
 message user_login_tos {

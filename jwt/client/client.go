@@ -6,7 +6,7 @@ import (
 	"github.com/gogf/gf/v2/os/gcfg"
 	"github.com/gogf/gf/v2/os/gctx"
 
-	protobuf "zhugedaojia.com/common/net/pb/user"
+	protobuf "github.com/micro-mesh/common/net/pb/user"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 
 	res, err := client.GetToken(ctx, userLoginTos)
 	if err != nil {
-		g.Log().Info(ctx,"err:",err)
+		g.Log().Info(ctx, "err:", err)
 		return
 	}
 

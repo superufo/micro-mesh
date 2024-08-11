@@ -8,7 +8,7 @@ import (
 
 	"github.com/gogf/gf/v2/os/gctx"
 
-	"zhugedaojia.com/jwt/internal/cmd"
+	"github.com/micro-mesh/jwt/internal/cmd"
 )
 
 func main() {
@@ -20,7 +20,7 @@ func main() {
 
 	err := index.AddCommand(&cmd.HttpCmd, &cmd.GrpcCmd)
 	if err != nil {
-		g.Log().Error("err:",err)
+		g.Log().Error("err:", err)
 	}
 
 	index.Run(gctx.New())

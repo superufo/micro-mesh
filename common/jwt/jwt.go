@@ -5,7 +5,7 @@ import (
 
 	"github.com/gogf/gf/util/gconv"
 	"github.com/golang-jwt/jwt/v4"
-	"zhugedaojia.com/common/model"
+	"github.com/micro-mesh/common/model"
 )
 
 type MemberClaims struct {

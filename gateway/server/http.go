@@ -8,9 +8,9 @@ import (
 	"github.com/gogf/gf/v2/os/gctx"
 	"time"
 
-	"zhugedaojia.com/common/share"
-	"zhugedaojia.com/gateway/server/base"
-	"zhugedaojia.com/gateway/server/inf"
+	"github.com/micro-mesh/common/share"
+	"github.com/micro-mesh/gateway/server/base"
+	"github.com/micro-mesh/gateway/server/inf"
 )
 
 // 获取网关的服务配置

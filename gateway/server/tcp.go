@@ -6,34 +6,34 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/gtcp"
 	"github.com/gogf/gf/v2/os/gctx"
+	"github.com/micro-mesh/gateway/server/base"
+	"github.com/micro-mesh/gateway/server/inf"
 	"time"
-	"zhugedaojia.com/gateway/server/base"
-	"zhugedaojia.com/gateway/server/inf"
 )
 
-type  TcpSrv struct {
+type TcpSrv struct {
 	// 数据
-	Ctx context.Context
-	Host    string
-	Port    int
+	Ctx        context.Context
+	Host       string
+	Port       int
 	properties TcpProperties
 
 	base.BaseServer
 }
 
-func (h TcpSrv)Receive() []byte{
+func (h TcpSrv) Receive() []byte {
 	return nil
 }
 
-func (h TcpSrv)Send([]byte) error {
+func (h TcpSrv) Send([]byte) error {
 	return nil
 }
 
-func (h TcpSrv)Run(ops inf.Properties) {
+func (h TcpSrv) Run(ops inf.Properties) {
 	h.Ctx = context.Background()
-	g.Log().Info(h.Ctx,fmt.Sprint("tcp ~~~ %s:%d",h.Host,h.Port))
+	g.Log().Info(h.Ctx, fmt.Sprint("tcp ~~~ %s:%d", h.Host, h.Port))
 
-	gtcp.NewServer(fmt.Sprint("%s:%d",h.Host,h.Port), func(conn *gtcp.Conn) {
+	gtcp.NewServer(fmt.Sprint("%s:%d", h.Host, h.Port), func(conn *gtcp.Conn) {
 		defer conn.Close()
 		for {
 			data, err := conn.Recv(-1)
@@ -49,37 +49,37 @@ func (h TcpSrv)Run(ops inf.Properties) {
 		}
 	}).Run()
 
-	g.Log().Info(h.Ctx,fmt.Sprint("tcp ~~~ %s:%d",h.Host,h.Port))
+	g.Log().Info(h.Ctx, fmt.Sprint("tcp ~~~ %s:%d", h.Host, h.Port))
 }
 
 func (h TcpSrv) GetProperties() inf.Properties {
 	return h.properties
 }
 
-func (h TcpSrv) SetProperties(properties inf.Properties){
+func (h TcpSrv) SetProperties(properties inf.Properties) {
 	h.properties = properties.(TcpProperties)
 }
 
-func NewTcpSrv(host string,port int) inf.IServer {
+func NewTcpSrv(host string, port int) inf.IServer {
 	tcpSrv := TcpSrv{
-		Ctx:  gctx.New(),
-		Host: host,
-		Port: port,
-		properties:  TcpProperties{},
+		Ctx:        gctx.New(),
+		Host:       host,
+		Port:       port,
+		properties: TcpProperties{},
 	}
 
 	tcpSrv.Name = "tcp"
 	return tcpSrv
 }
 
-func  WithTcpTimeout(timeout  time.Duration) inf.PropertyFunc {
+func WithTcpTimeout(timeout time.Duration) inf.PropertyFunc {
 	return func(p *inf.Properties) {
 		hp := (*p).(TcpProperties)
 		hp.timeout = timeout
 	}
 }
 
-func WithTcpCash(caching  bool) inf.PropertyFunc {
+func WithTcpCash(caching bool) inf.PropertyFunc {
 	return func(p *inf.Properties) {
 		hp := (*p).(TcpProperties)
 		hp.caching = caching
@@ -91,8 +91,6 @@ type TcpProperties struct {
 	caching bool
 }
 
-func (h  TcpProperties)Get(key string) (val interface{}){
+func (h TcpProperties) Get(key string) (val interface{}) {
 	return nil
 }
-
-

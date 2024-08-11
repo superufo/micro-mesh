@@ -9,14 +9,14 @@ import (
 	"github.com/gogf/gf/os/gtime"
 	"github.com/gogf/gf/v2/frame/g"
 
-	"zhugedaojia.com/common/jwt"
-	"zhugedaojia.com/jwt/internal/model"
-	"zhugedaojia.com/jwt/internal/net"
-	"zhugedaojia.com/jwt/internal/service"
+	"github.com/micro-mesh/common/jwt"
+	"github.com/micro-mesh/jwt/internal/model"
+	"github.com/micro-mesh/jwt/internal/net"
+	"github.com/micro-mesh/jwt/internal/service"
 
-	protobuf "zhugedaojia.com/common/net/pb/user"
-	"zhugedaojia.com/common/response"
-	cSrv "zhugedaojia.com/common/service"
+	protobuf "github.com/micro-mesh/common/net/pb/user"
+	"github.com/micro-mesh/common/response"
+	cSrv "github.com/micro-mesh/common/service"
 )
 
 var gctx context.Context
@@ -89,12 +89,12 @@ func (s GrpcController) GetToken(ctx context.Context, input *protobuf.UserLoginT
 	return res, nil
 }
 
-func (s GrpcController) VerifyToken(ctx context.Context, input *protobuf.VerifyTokenTos) (*protobuf.VerifyTokenToc, error){
+func (s GrpcController) VerifyToken(ctx context.Context, input *protobuf.VerifyTokenTos) (*protobuf.VerifyTokenToc, error) {
 	var (
 		res = &protobuf.VerifyTokenToc{}
 		err = errors.New("")
 
-	    context = cSrv.ContextService
+		context = cSrv.ContextService
 	)
 
 	authorization := input.Token
@@ -107,7 +107,7 @@ func (s GrpcController) VerifyToken(ctx context.Context, input *protobuf.VerifyT
 			res.Msg = "token已经过期"
 			res.Data = false
 
-			return res,err
+			return res, err
 		}
 
 		//开始判断用户和机构状态是否正常,全部正常的情况写入上下文
@@ -119,7 +119,7 @@ func (s GrpcController) VerifyToken(ctx context.Context, input *protobuf.VerifyT
 				res.Msg = "用户信息已更改，请重新登录"
 				res.Data = false
 
-				return res,err
+				return res, err
 			}
 			//查找归属机构
 			var userOrg *model.BaseOrg
@@ -133,14 +133,12 @@ func (s GrpcController) VerifyToken(ctx context.Context, input *protobuf.VerifyT
 		res.Msg = "登录过期，请重新登录"
 		res.Data = false
 
-		return res,err
+		return res, err
 	}
 
 	res.Code = uint32(response.ResAuthError.Code())
 	res.Msg = "token验证通过"
 	res.Data = true
 
-	return res,err
+	return res, err
 }
-
-

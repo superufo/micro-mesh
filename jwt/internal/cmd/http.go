@@ -2,19 +2,16 @@ package cmd
 
 import (
 	"context"
+	"github.com/micro-mesh/jwt/internal/controller/user"
 	"net/http"
 	"strconv"
 	"strings"
-	"zhugedaojia.com/jwt/internal/controller/user"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcfg"
 	"github.com/gogf/gf/v2/os/gcmd"
-
-	. "zhugedaojia.com/common/share"
 )
-
 
 var (
 	HttpCmd = gcmd.Command{
@@ -27,7 +24,7 @@ var (
 			g.Log().Info(ctx, "add:", add)
 			address := add.Interfaces()
 
-			if address==nil{
+			if address == nil {
 				g.Log().Error(ctx, "address为空")
 			}
 

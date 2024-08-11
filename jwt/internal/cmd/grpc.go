@@ -16,8 +16,7 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/nacos-group/nacos-sdk-go/v2/common/constant"
 
-	"zhugedaojia.com/jwt/internal/controller/user"
-	. "zhugedaojia.com/jwt/internal/service"
+	"github.com/micro-mesh/jwt/internal/controller/user"
 )
 
 var (
@@ -26,16 +25,16 @@ var (
 		Usage: "grpc",
 		Brief: "start grpc server of jwt",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
-			rules := make([]*flow.Rule,1)
+			rules := make([]*flow.Rule, 1)
 			rulesVar, err := gcfg.Instance().Get(ctx, "sentinel.rules.api")
 			g.Log().Info(ctx, "配置:", rulesVar)
 			if err := gconv.Struct(rulesVar.Map(), &rules[0]); err != nil {
 				g.Log().Info(ctx, "配置转换出错:", rulesVar)
 			}
 
-			isLimit := NewSentinelService(ctx,g.Log(),rules).Limit()
-			if isLimit==true{
-                  os.Exit(0)
+			isLimit := NewSentinelService(ctx, g.Log(), rules).Limit()
+			if isLimit == true {
+				os.Exit(0)
 			}
 
 			wg := sync.WaitGroup{}
@@ -81,7 +80,7 @@ var (
 				g.Log().Info(ctx, gmode.String(), group.String())
 				//服务发现
 				config, err := nacosService.GetConfig(gmode.String(), group.String())
-				g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetContent(config,"default.yaml")
+				g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetContent(config, "default.yaml")
 				g.Cfg().GetAdapter().(*gcfg.AdapterFile).SetFileName("default.yaml")
 				g.Log().Info(ctx, "config:", g.Cfg())
 
@@ -96,7 +95,6 @@ var (
 
 				wg.Done()
 			}()
-
 
 			add, err := gcfg.Instance().Get(ctx, "server.grpc.Address")
 			name, err := gcfg.Instance().Get(ctx, "server.grpc.Name")
@@ -122,7 +120,3 @@ var (
 		},
 	}
 )
-
-
-
-

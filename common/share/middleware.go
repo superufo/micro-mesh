@@ -4,8 +4,9 @@ import (
 	"net/http"
 
 	"github.com/gogf/gf/v2/net/ghttp"
-	"zhugedaojia.com/common/response"
+	"github.com/micro-mesh/common/response"
 )
+
 var ErrorMiddleware = errorMiddleware{}
 
 type errorMiddleware struct {
@@ -27,4 +28,3 @@ func (s *errorMiddleware) ErrorHandler(r *ghttp.Request) {
 		return
 	}
 }
-

@@ -6,7 +6,7 @@
 
 syntax = "proto3";
 package pb;
-option go_package = "zhugedaojia.com/common/net/pb/gw";
+option go_package = "github.com/micro-mesh/common/net/pb/gw";
 
 service Proxy {
     //双向流模式

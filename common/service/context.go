@@ -6,7 +6,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 
-	"zhugedaojia.com/common/model"
+	"github.com/micro-mesh/common/model"
 )
 
 // 上下文管理服务
