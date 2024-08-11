@@ -1,0 +1,73 @@
+server:
+  Name: AuthSrv
+  Address: 0.0.0.0:8299
+  ServerAgent: housekeeping-service-app
+  readTimeout: 300s
+  LogPath: ../../log
+  logStdout: true
+  serverAgent: house keeping service server
+  clientMaxBodySize: 810241024
+  grpc:
+    Address: 127.0.0.1:8300
+    Name: AuthSrv
+    readTimeout: 300s
+    LogPath: /tmp/log/housekeeping-service-app/server
+    logStdout: true
+    serverAgent: house keeping service server
+    clientMaxBodySize: 810241024
+nacos:
+  Address:
+    - 127.0.0.1:8848
+  group: "zgdj_backend"  
+logger:
+  path: ""
+  file: "{Y-m-d}.log"
+  prefix: ""
+  level: DEV
+  ctxKeys:
+    - AppData
+  headerPrint: true
+  Stdout: true
+  stdoutPrint: true
+  rotateSize: 0
+  rotateExpire: 0
+  rotateBackupLimit: 0
+  rotateBackupExpire: 0
+  rotateBackupCompress: 0
+  rotateCheckInterval: 1h
+  writerColorEnable: false
+database:
+  default:
+    link: mysql:housekeeping_service:#wfFSsW#yHjfyqtkZ5xIFMTWkYQr7Qlu@tcp(127.0.0.1:3306)/housekeeping_service3
+    debug: true
+  cron:
+    link: mysql:housekeeping_service:#wfFSsW#yHjfyqtkZ5xIFMTWkYQr7Qlu@tcp(127.0.0.1:3306)/housekeeping_service3
+    maxOpen: 2
+    debug: false
+  logger:
+    Path: /tmp/log/housekeeping-service-app/sql
+    Level: all
+    Stdout: true
+redis:
+  default: 127.0.0.1:8379,1,qweproimvq34oMP_Loawgq_s343245g_Vem3qp9j98?maxIdle=10&maxActive=200&idleTimeout=10&maxConnLifetime=120
+lock:
+  redis: 127.0.0.1:8379,1,qweproimvq34oMP_Loawgq_s343245g_Vem3qp9j98?maxIdle=10&maxActive=20&idleTimeout=10&maxConnLifetime=120
+jwt:
+  key: afqeoasdfg_PL345t2345sfmwprqwoergm2p5409gdfgwergwrifkmqpoeifmqp39ef
+manticore:
+  host: 127.0.0.1
+  port: 9309
+system:
+  appRootPath: /home/yanghang/project/golang/housekeeping-service
+  serverHost: https://test-housekeeping.hcarm.com
+upload:
+  type: huawei
+  huawei:
+    accessKeyId: QC7YGVWLUBQ5O4RWTJKN
+    secretAccessKey: 8BmNSMb634SQnkS7C8wDChhuqefkQDBHCUux1hFj
+    endpoint: obs.cn-south-1.myhuaweicloud.com
+    bucket: test-hw-obs
+    url: https://test-hw-obs.hcarm.com
+    rootPath: housekeeping-service/
+gf:
+  gmode: develop

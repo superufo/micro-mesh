@@ -1,0 +1,15 @@
+/src/zhugedaojia.com/gateway/manifest/config/config11.toml
+.idea/
+.git/
+.vscode/
+/bin/
+/cert/
+jwt.exe
+/packed/
+/swagger/
+/vendor/
+/t/
+go.mod
+/cache/
+/log/
+/vendor/

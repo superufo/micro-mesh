@@ -1,0 +1,56 @@
+// 网关与服务器通讯协议
+
+// protoc --go-grpc_out=. --go-grpc_opt=paths=source_relative  gw.proto
+// protoc --go_out=. --go_opt=paths=source_relative gw.proto
+// protoc --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. gw.proto
+
+syntax = "proto3";
+package pb;
+option go_package = "zhugedaojia.com/common/net/pb/gw";
+
+service Proxy {
+    //双向流模式
+    rpc ProxyStreamMsg (stream stream_tos) returns (stream stream_tog){};
+
+    //一元模式
+    rpc ProxyUnitaryMsg (unitary_tos)  returns (unitary_tog) {};
+}
+
+// tos 发送给服务器
+message stream_tos {
+    string   client_id = 1;  //连接透传id  对长连接需要 对每一个链接都是唯一的
+    uint32        msg = 2;  // 消息编号
+    bytes        data = 3;  // 数据
+}
+
+// tog 发送给网关
+message stream_tog {
+    string       client_id = 1;    //连接透传id    对长连接需要 对每一个链接都是唯一的
+    bool         all_uid = 2;      //全服在线玩家广播
+    repeated string  uids = 3;     //广播给指定玩家
+    uint32            msg = 4;     //消息编号
+    bytes            data = 5;     //数据
+}
+
+// tos 发送给服务器
+message unitary_tos {
+    uint32        msg = 1;  //  消息编号
+    bytes        data = 2;  //     数据
+}
+
+// tog 发送给服务器
+message unitary_tog {
+    uint32        msg = 1;  //  消息编号
+    bytes        data = 2;  //     数据
+}
+
+
+
+
+
+
+
+
+
+
+

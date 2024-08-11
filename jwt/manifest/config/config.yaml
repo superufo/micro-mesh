@@ -1,0 +1,60 @@
+gf:
+  gmode: develop
+nacos:
+  Address:
+    - 127.0.0.1:8848
+  group:  "zgdj_backend"
+
+## 限流配置放本地
+sentinel:
+  rules:
+    api:
+      resource: api
+      # 当前流量控制器的 Token 计算策略。Direct 表示直接使用字段 Threshold 作为阈值；WarmUp 表示使用预热方式计算 Token 的阈值
+      tokenCalculateStrategy: Threshold
+      # eject表示超过阈值直接拒绝，Throttling表示匀速排队
+      controlBehavior: 0
+      # StatIntervalInMs 是1000(也就是1秒)，那么Threshold就表示QPS，流量控制器也就会依据资源的QPS来做流控
+      threshold: 100
+      # 调用关系限流策略，CurrentResource表示使用当前规则的resource做流控；AssociatedResource表示使用关联的resource做流控，关联的resource在字段 RefResource 定义
+      relationStrategy :
+      # 关联的resource
+      refResource:
+      # 匀速排队的最大等待时间，该字段仅仅对 Throttling ControlBehavior生效；
+      maxQueueingTimeMs : 10
+      # 预热的时间长度，该字段仅仅对 WarmUp 的TokenCalculateStrategy生效；
+      warmUpPeriodSec: 50
+      # 预热的因子，默认是3，该值的设置会影响预热的速度，该字段仅仅对 WarmUp 的TokenCalculateStrategy生效；
+      warmUpColdFactor: 3
+      # 规则对应的流量控制器的独立统计结构的统计周期。如果StatIntervalInMs是1000，也就是统计QPS。
+      statIntervalInMs : 1000
+      # v1.0.2 新增，当 TokenCalculateStrategy 为 MemoryAdaptive 时生效
+      # 自适应流量控制算法相关参数
+      # 限制条件：LowMemUsageThreshold > HighMemUsageThreshold && MemHighWaterMarkBytes > MemLowWaterMarkBytes
+      # 当前使用内存 <= MemLowWaterMarkBytes，则 threshold = LowMemUsageThreshold
+      # 当前使用内存 >= MemHighWaterMarkBytes，则threshold = HighMemUsageThreshold
+      # 当前使用内存在 (MemLowWaterMarkBytes, MemHighWaterMarkBytes) 之间，threshold 也在(HighMemUsageThreshold, LowMemUsageThreshold)之间
+      lowMemUsageThreshold: 100
+      highMemUsageThreshold: 1000
+      memLowWaterMarkBytes: 100
+      memHighWaterMarkBytes: 1000
+    hot:
+      resource: hot
+      tokenCalculateStrategy: Threshold
+      controlBehavior: 0
+      threshold: 100
+      relationStrategy:
+      refResource:
+      maxQueueingTimeMs: 10
+      warmUpPeriodSec: 50
+      warmUpColdFactor: 3
+      statIntervalInMs: 1000
+      lowMemUsageThreshold: 100
+      highMemUsageThreshold: 1000
+      memLowWaterMarkBytes: 100
+      memHighWaterMarkBytes: 1000
+
+
+
+
+

@@ -1,0 +1,8 @@
+.idea/
+.git/
+.vscode/
+/bin/
+*.exe
+/z/
+/jwt/manifest/config/config11.toml
+/gateway/vendor/

@@ -1,0 +1,59 @@
+// https://grpc.io/docs/languages/go/quickstart/#regenerate-grpc-code
+// go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
+// protoc --go-grpc_out=. --go-grpc_opt=require_unimplemented_servers=false --go-grpc_opt=paths=source_relative  user.proto
+// protoc --go_out=. --go_opt=paths=source_relative user.proto
+
+// protoc --go_out=paths=source_relative:. --go-grpc_out=paths=source_relative:. user.proto
+
+syntax = "proto3";
+
+package user;
+option go_package ="zhugedaojia.com/common/net/pb/user";
+
+// 服务器登录请求信息
+message user_login_tos {
+    string   account     =  1;
+    string    password   = 2 ;
+    optional  string    org_code   = 3;
+    optional  uint32       type    = 4;
+}
+
+// 回复客户端的登录信息
+message data_toc {
+    string   token     =  1;
+    string    time   = 2 ;
+}
+
+message reply_toc{
+    uint32   code  =  1;
+    string    msg   = 2 ;
+    data_toc  data  = 3;
+}
+
+service User{
+    rpc GetToken(user_login_tos) returns (reply_toc) {};
+
+    rpc VerifyToken(verify_token_tos) returns (verify_token_toc) {};
+}
+
+message verify_token_tos{
+    string   token     =  1;
+}
+
+message verify_token_toc{
+    uint32   code  =  1;
+    string    msg   = 2 ;
+    bool     data  = 3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
